@@ -32,9 +32,9 @@ class TransactionDB implements TransactionDbFunctions {
 
   Future<void> refreashUia() async {
     final _list = await getTransactions();
-    _list.sort((a, b) => b.date.compareTo(a.date));
+    _list.sort((a, b) => a.date.compareTo(b.date));
     transactionListListener.value.clear();
-    transactionListListener.value.addAll(_list);
+    transactionListListener.value.addAll(_list.reversed);
     transactionListListener.notifyListeners();
   }
 

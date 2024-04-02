@@ -21,7 +21,7 @@ class ScreenTransaction extends StatelessWidget {
           return (TransactionDB.instance.transactionListListener.value.length !=
                   0
               ? ListView.separated(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(5),
                   itemBuilder: (context, index) {
                     final _tran = newList[index];
                     return Slidable(
