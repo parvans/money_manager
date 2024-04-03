@@ -16,11 +16,13 @@ class MoneyBottomNavigation extends StatelessWidget {
             onTap: (value) {
               ScreenHome.selectedNotifier.value = value;
             },
-            items: [
+            items: const [
               BottomNavigationBarItem(
                   icon: Icon(Icons.currency_rupee), label: 'Transactions'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.category), label: 'Category'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.analytics), label: 'Analytics'),
             ]);
       },
     );

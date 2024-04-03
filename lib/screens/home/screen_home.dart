@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/db/category/category_db.dart';
 import 'package:money_manager/models/category/category_model.dart';
+import 'package:money_manager/screens/analysis/money_analysis.dart';
 import 'package:money_manager/screens/category/category_app_popup.dart';
 import 'package:money_manager/screens/category/screen_category.dart';
 import 'package:money_manager/screens/home/widgets/bottom_navigation.dart';
@@ -11,7 +12,11 @@ class ScreenHome extends StatelessWidget {
 
   static ValueNotifier<int> selectedNotifier = ValueNotifier(0);
 
-  final _pages = const [ScreenTransaction(), ScreenCategory()];
+  final _pages = const [
+    ScreenTransaction(),
+    ScreenCategory(),
+    ScreenAnalysis()
+  ];
 
   @override
   Widget build(BuildContext context) {

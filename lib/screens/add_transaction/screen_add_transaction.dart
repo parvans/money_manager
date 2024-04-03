@@ -87,7 +87,7 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
                     //   );
                     // },
                     context: context,
-                    firstDate: DateTime.now().subtract(Duration(days: 30)),
+                    firstDate:DateTime.now().subtract(Duration(days: 30)),
                     lastDate: DateTime.now(),
                     initialDate: DateTime.now());
                 if (_selectedDateTemp == null) {
@@ -100,12 +100,12 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
                   });
                 }
               },
-              icon: Icon(Icons.calendar_today),
+              icon: const Icon(Icons.calendar_today),
               label: Text(
                 _selectedDates == null
                     ? 'Select Date'
                     : _selectedDates.toString(),
-                style: TextStyle(color: Colors.blue),
+                style: const TextStyle(color: Colors.blue),
               )),
 
           const SizedBox(
@@ -126,7 +126,7 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
                           _selectedCategoryId = null;
                         });
                       }),
-                  Text(
+                  const Text(
                     'Income',
                     style: TextStyle(color: Colors.black),
                   ),
@@ -144,7 +144,7 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
                           _selectedCategoryId = null;
                         });
                       }),
-                  Text(
+                  const Text(
                     'Expense',
                     style: TextStyle(color: Colors.black),
                   ),
@@ -199,11 +199,11 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
               onPressed: () {
                 addTransaction(context);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.check,
                 color: Colors.white,
               ),
-              label: Text(
+              label: const Text(
                 'Submit',
                 style: TextStyle(color: Colors.white),
               ))
@@ -247,6 +247,5 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
 
     TransactionDB.instance.addTransaction(_model);
     Navigator.of(context).pop();
-    print("Transaction Added Successfully!");
   }
 }
