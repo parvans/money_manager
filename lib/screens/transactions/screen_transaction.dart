@@ -20,72 +20,80 @@ class ScreenTransaction extends StatelessWidget {
         builder: (BuildContext cxt, List<TransactionModel> newList, Widget? _) {
           return (TransactionDB.instance.transactionListListener.value.length !=
                   0
-              ? ListView.separated(
-                  padding: const EdgeInsets.all(5),
-                  itemBuilder: (context, index) {
-                    final _tran = newList[index];
-                    return Slidable(
-                      key: Key(_tran.id!),
-                      startActionPane:
-                          ActionPane(motion: ScrollMotion(), children: [
-                        SlidableAction(
-                          onPressed: (cxt) {
-                            TransactionDB.instance.deleteTransaction(_tran.id!);
-                          },
-                          backgroundColor: Colors.red,
-                          icon: Icons.delete,
-                          // label: 'Delete',
-                        ),
-                        SlidableAction(
-                          onPressed: (cxt) {
-                            HapticFeedback.vibrate();
-                            print('cancel');
-                          },
-                          backgroundColor: Colors.green,
-                          icon: Icons.cancel,
-                          // label: 'Delete',
-                        ),
-                      ]),
-                      child: Card(
-                        elevation: 0,
-                        color: Colors.white,
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: Colors.blue,
-                            child: Text(
-                              parseDate(_tran.date),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            radius: 50,
+              ? RefreshIndicator(
+                color: Colors.blue,
+                  onRefresh: () async {
+                    
+                    await TransactionDB.instance.refreashUia();
+                  },
+                  child: ListView.separated(
+                    padding: const EdgeInsets.all(5),
+                    itemBuilder: (context, index) {
+                      final _tran = newList[index];
+                      return Slidable(
+                        key: Key(_tran.id!),
+                        startActionPane:
+                            ActionPane(motion: ScrollMotion(), children: [ 
+                          SlidableAction(
+                            onPressed: (cxt) {
+                              TransactionDB.instance
+                                  .deleteTransaction(_tran.id!);
+                            },
+                            backgroundColor: Colors.red,
+                            icon: Icons.delete,
+                            // label: 'Delete',
                           ),
-                          title: Text(_tran.purpose.length > 20
-                              ? _tran.purpose.substring(0, 12) + '...'
-                              : _tran.purpose),
-                          subtitle: Text(_tran.category.name.length > 20
-                              ? _tran.category.name.substring(0, 12) + '...'
-                              : _tran.category.name),
-                          trailing: (_tran.type == categoryType.income)
-                              ? Text(
-                                  '+ ${_tran.amount}',
-                                  style: TextStyle(
-                                      color: Colors.green, fontSize: 15),
-                                )
-                              : Text(
-                                  '- ${_tran.amount}',
-                                  style: TextStyle(
-                                      color: Colors.red, fontSize: 15),
-                                ),
+                          SlidableAction(
+                            onPressed: (cxt) {
+                              HapticFeedback.vibrate();
+                              print('cancel');
+                            },
+                            backgroundColor: Colors.green,
+                            icon: Icons.cancel,
+                            // label: 'Delete',
+                          ),
+                        ]),
+                        child: Card(
+                          elevation: 0,
+                          color: Colors.white,
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.blue,
+                              child: Text(
+                                parseDate(_tran.date),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              radius: 50,
+                            ),
+                            title: Text(_tran.purpose.length > 20
+                                ? _tran.purpose.substring(0, 12) + '...'
+                                : _tran.purpose),
+                            subtitle: Text(_tran.category.name.length > 20
+                                ? _tran.category.name.substring(0, 12) + '...'
+                                : _tran.category.name),
+                            trailing: (_tran.type == categoryType.income)
+                                ? Text(
+                                    '+ ${_tran.amount}',
+                                    style: TextStyle(
+                                        color: Colors.green, fontSize: 15),
+                                  )
+                                : Text(
+                                    '- ${_tran.amount}',
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 15),
+                                  ),
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return SizedBox(
-                      height: 10,
-                    );
-                  },
-                  itemCount: newList.length,
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox(
+                        height: 10,
+                      );
+                    },
+                    itemCount: newList.length,
+                  ),
                 )
               : Center(
                   child: Text('No Transaction Yet',

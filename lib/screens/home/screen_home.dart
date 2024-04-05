@@ -20,42 +20,45 @@ class ScreenHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-        title:
-            const Text('Money Manager', style: TextStyle(color: Colors.white)),
-        centerTitle: true,
-        backgroundColor: Colors.blue,
-      ),
-      bottomNavigationBar: MoneyBottomNavigation(),
-      body: SafeArea(
-          child: ValueListenableBuilder(
-              valueListenable: selectedNotifier,
-              builder: (BuildContext context, updatedIndex, Widget? _) {
-                return _pages[updatedIndex];
-              })),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
-        onPressed: () {
-          if (selectedNotifier.value == 0) {
-            print("Add Transaction");
-            Navigator.of(context).pushNamed('/add-transaction');
-          } else {
-            print("Add Category");
-            // final _sample = CategoryModel(
-            //     name: 'Travel',
-            //     type: categoryType.expense,
-            //     id: DateTime.now().millisecondsSinceEpoch.toString());
-            // CategoryDB().insertCategory(_sample);
-            showCategoryAppPopUp(context);
-          }
-        },
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
-    );
+    return ValueListenableBuilder(
+        valueListenable: selectedNotifier,
+        builder: (BuildContext context, updatedIndex, Widget? _) {
+          return Scaffold(
+            backgroundColor: Colors.grey[100],
+            appBar: AppBar(
+              title: const Text('Money Manager',
+                  style: TextStyle(color: Colors.white)),
+              centerTitle: true,
+              backgroundColor: Colors.blue,
+            ),
+            body: SafeArea(child: _pages[updatedIndex]),
+            bottomNavigationBar: MoneyBottomNavigation(),
+            floatingActionButton: updatedIndex == 2
+                ? null
+                : FloatingActionButton(
+                    backgroundColor: Colors.blue,
+                    onPressed: () {
+                      if (selectedNotifier.value == 0) {
+                        print("Add Transaction");
+                        Navigator.of(context).pushNamed('/add-transaction');
+                      } else if (selectedNotifier.value == 1) {
+                        print("Add Category");
+                        // final _sample = CategoryModel(
+                        //     name: 'Travel',
+                        //     type: categoryType.expense,
+                        //     id: DateTime.now().millisecondsSinceEpoch.toString());
+                        // CategoryDB().insertCategory(_sample);
+                        showCategoryAppPopUp(context);
+                      } else {
+                        print("Add Analysis");
+                      }
+                    },
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                  ),
+          );
+        });
   }
 }
